@@ -60,4 +60,27 @@ async def send_invoice(order: OrderData):
         return {"message": "Admin va Userga email yuborildi"}
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Xatolik: {str(e)}")
+    
+
+
+class AdminContact(BaseModel):
+    name: str
+    email: EmailStr
+    comment: str
+
+# ✅ Yangi endpoint
+@app.post("/contact-admin")
+async def contact_admin(data: AdminContact):
+    try:
+        email_html = render_template(admin_contact_template, data.dict())
+
+        await send_email(
+            subject="Yangi aloqa xabari",
+            recipient=ADMIN_EMAIL,
+            html_content=email_html,
+        )
+
+        return {"message": "Xabar admin emailiga yuborildi"}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Xatolik: {str(e)}")  
 

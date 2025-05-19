@@ -37,7 +37,7 @@ if __name__ == "__main__":
     import uvicorn
 
     uvicorn.run(
-        app="app.main:backend_app",
+        app="main:backend_app",
         host=SERVER_HOST,
         port=8080,
         reload=False,

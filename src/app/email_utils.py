@@ -1,17 +1,30 @@
+import ssl
 from email.message import EmailMessage
+from typing import Union
+
 import aiosmtplib
-import os
+import certifi
+from pydantic import EmailStr
 
-EMAIL_ADDRESS = os.getenv("EMAIL_ADDRESS")
-EMAIL_PASSWORD = os.getenv("EMAIL_PASSWORD")
+from config.settings import EMAIL_ADDRESS, EMAIL_PASSWORD
 
-async def send_email(subject: str, recipient: str, html_content: str):
+print("EMAIL_ADDRESS", EMAIL_ADDRESS)
+
+
+async def send_email(subject: str, recipient: Union[EmailStr, str], html_content: str):
+    if not recipient:
+        raise ValueError("Email oluvchi manzil ko'rsatilmagan")
+
     msg = EmailMessage()
     msg["From"] = EMAIL_ADDRESS
     msg["To"] = recipient
     msg["Subject"] = subject
     msg.set_content("This is an HTML email. Please view it in an HTML compatible email client.")
     msg.add_alternative(html_content, subtype="html")
+
+    ssl_context = ssl.create_default_context(cafile=certifi.where())
+
+    print("Sending email...", msg)
 
     await aiosmtplib.send(
         msg,
@@ -20,4 +33,5 @@ async def send_email(subject: str, recipient: str, html_content: str):
         username=EMAIL_ADDRESS,
         password=EMAIL_PASSWORD,
         use_tls=True,
+        tls_context=ssl_context
     )

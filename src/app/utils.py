@@ -10,9 +10,9 @@ def generate_order_number(prefix="SSC", width=4):
 
     with open(COUNTER_FILE, "r+") as f:
         last_number = int(f.read())
-        new_number = last_number + 1
+        new_number = str(last_number + 1)
         f.seek(0)
-        f.write(str(new_number))
+        f.write(new_number)
         f.truncate()
 
-    return f"{prefix}{str(new_number).zfill(width)}"
+    return f"{prefix}{new_number.zfill(width)}"

@@ -62,10 +62,10 @@ admin_contact_template = """
 <html>
 <body>
     <h2>Yangi aloqa xabari</h2>
-    <p><strong>Ism:</strong> {{ name }}</p>
-    <p><strong>Email:</strong> {{ email }}</p>
+    <p><strong>Ism:</strong> {{name}}</p>
+    <p><strong>Email:</strong> {{email}}</p>
     <p><strong>Xabar:</strong></p>
-    <p>{{ comment }}</p>
+    <p>{{comment}}</p>
 </body>
 </html>
 """

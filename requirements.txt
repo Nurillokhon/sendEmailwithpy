@@ -1,6 +1,9 @@
-fastapi
-uvicorn
-pydantic
-aiosmtplib
-python-dotenv
-email-validator
+fastapi==0.115.12
+fastapi[standard]
+python-dotenv==1.1.0
+uvicorn==0.34.2
+pydantic==2.11.4
+email_validator==2.2.0
+aiosmtplib==4.0.1
+ requests==2.32.3
+

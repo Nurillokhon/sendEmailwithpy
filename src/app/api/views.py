@@ -1,41 +1,20 @@
-from fastapi import FastAPI, HTTPException
-from pydantic import BaseModel, EmailStr
-from dotenv import load_dotenv
-import os
-
-# .env faylni to‘g‘ri yo‘l bilan yuklash
-load_dotenv(dotenv_path=os.path.join(os.path.dirname(os.path.dirname(__file__)), ".env"))
-
+from fastapi import APIRouter
+from fastapi import HTTPException
+from fastapi import status
 
 from app.email_templates import admin_template, user_template, render_template, admin_contact_template
 from app.email_utils import send_email
 from app.utils import generate_order_number
+from config.settings import ADMIN_EMAIL
+from ..schema import OrderData, AdminContact, ResponseMessage
+
+app = APIRouter(
+    tags=["email"],
+    responses={404: {"description": "Not found"}},
+)
 
 
-load_dotenv()
-
-ADMIN_EMAIL = os.getenv("ADMIN_EMAIL")
-
-app = FastAPI()
-
-class OrderData(BaseModel):
-    order_number: str
-    first_name: str
-    last_name: str
-    address: str
-    zip: str
-    city: str
-    country: str
-    phone: str
-    email: EmailStr
-    product_name: str
-    product_price: str
-    product_describ: str = None
-    product_image: str = None
-    passImage: str = None
-    grand_total: str
-
-@app.post("/send-invoice")
+@app.post("/send-invoice", response_model=ResponseMessage, status_code=status.HTTP_201_CREATED)
 async def send_invoice(order: OrderData):
     try:
         data_dict = order.dict()
@@ -51,6 +30,7 @@ async def send_invoice(order: OrderData):
 
         # User uchun email tayyorlash
         user_email_html = render_template(user_template, data_dict)
+        print(user_email_html)
         await send_email(
             subject=f"Sizning buyurtmangiz: {order.order_number}",
             recipient=order.email,
@@ -60,15 +40,9 @@ async def send_invoice(order: OrderData):
         return {"message": "Admin va Userga email yuborildi"}
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Xatolik: {str(e)}")
-    
 
 
-class AdminContact(BaseModel):
-    name: str
-    email: EmailStr
-    comment: str
-
-@app.post("/contact-admin")
+@app.post("/contact-admin", response_model=ResponseMessage, status_code=status.HTTP_200_OK)
 async def contact_admin(data: AdminContact):
     try:
         email_html = render_template(admin_contact_template, data.dict())
@@ -81,5 +55,4 @@ async def contact_admin(data: AdminContact):
 
         return {"message": "Xabar admin emailiga yuborildi"}
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Xatolik: {str(e)}")  
-
+        raise HTTPException(status_code=500, detail=f"Xatolik: {str(e)}")

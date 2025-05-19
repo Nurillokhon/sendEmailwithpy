@@ -68,7 +68,6 @@ class AdminContact(BaseModel):
     email: EmailStr
     comment: str
 
-# ✅ Yangi endpoint
 @app.post("/contact-admin")
 async def contact_admin(data: AdminContact):
     try:

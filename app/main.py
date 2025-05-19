@@ -7,7 +7,7 @@ import os
 load_dotenv(dotenv_path=os.path.join(os.path.dirname(os.path.dirname(__file__)), ".env"))
 
 
-from app.email_templates import admin_template, user_template, render_template
+from app.email_templates import admin_template, user_template, render_template, admin_contact_template
 from app.email_utils import send_email
 from app.utils import generate_order_number
 

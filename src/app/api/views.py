@@ -1,4 +1,5 @@
 import os.path
+import uuid
 
 from fastapi import APIRouter
 
@@ -22,24 +23,32 @@ app = APIRouter(
     responses={404: {"description": "Not found"}},
 )
 
-
 @app.post("/send-invoice", response_model=ResponseMessage)
 async def send_invoice(data: dict = Depends(get_order_data)):
     try:
         base_dir = f"{BASE_DIR.parent}/media"
         os.makedirs(base_dir, exist_ok=True)
+
+        product_image_url = None
+        pass_image_url = None
+        # Save product image
         if data["product_image"]:
-            product_image_url = f"{base_dir}/{data['product_image'].filename}"
-            with open(product_image_url, "wb", ) as f:
+            ext = os.path.splitext(data["product_image"].filename)[-1]
+            product_image_filename = f"{uuid.uuid4()}{ext}"
+            product_image_path = os.path.join(base_dir, product_image_filename)
+            with open(product_image_path, "wb") as f:
                 f.write(await data["product_image"].read())
+            product_image_url = f"media/{product_image_filename}"
 
+        # Save pass image
         if data["passImage"]:
-            pass_image_url = f"{base_dir}/{data['passImage'].filename}"
-            with open(pass_image_url, "wb") as f:
+            ext = os.path.splitext(data["passImage"].filename)[-1]
+            pass_image_filename = f"{uuid.uuid4()}{ext}"
+            pass_image_path = os.path.join(base_dir, pass_image_filename)
+            with open(pass_image_path, "wb") as f:
                 f.write(await data["passImage"].read())
+            pass_image_url = f"media/{pass_image_filename}"
 
-        product_image_url = "media/" + data["product_image"].filename
-        pass_image_url = "media/" + data["passImage"].filename
 
         # Generate order number
         order_number = generate_order_number()

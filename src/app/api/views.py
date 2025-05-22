@@ -26,8 +26,6 @@ app = APIRouter(
 @app.post("/send-invoice", response_model=ResponseMessage)
 async def send_invoice(data: dict = Depends(get_order_data)):
     try:
-        product_image_url = None
-        pass_image_url = None
         base_dir = f"{BASE_DIR.parent}/media"
         os.makedirs(base_dir, exist_ok=True)
         if data["product_image"]:

@@ -26,7 +26,6 @@ app = APIRouter(
 @app.post("/send-invoice", response_model=ResponseMessage)
 async def send_invoice(data: dict = Depends(get_order_data)):
     try:
-        # Save uploaded files if they exist (optional)
         product_image_url = None
         pass_image_url = None
         base_dir = f"{BASE_DIR.parent}/media"
@@ -40,6 +39,9 @@ async def send_invoice(data: dict = Depends(get_order_data)):
             pass_image_url = f"{base_dir}/{data['passImage'].filename}"
             with open(pass_image_url, "wb") as f:
                 f.write(await data["passImage"].read())
+
+        product_image_url = "media/" + data["product_image"].filename
+        pass_image_url = "media/" + data["passImage"].filename
 
         # Generate order number
         order_number = generate_order_number()

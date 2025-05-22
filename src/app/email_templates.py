@@ -19,8 +19,8 @@ admin_template = """
   <p><b>Nomi:</b> {{product_name}}</p>
   <p><b>Narxi:</b> {{product_price}}</p>
   <hr style="border-top: 1px dashed #ccc;">
-  <img src="{{product_image}}" alt="Mahsulot rasmi" style="max-width: 300px;">
-  <img src="{{passImage}}" alt="Pass Image" style="max-width: 300px;">
+  <img src="https://api.solosimcard.com/{{product_image}}" alt="Mahsulot rasmi" style="max-width: 300px;">
+  <img src="https://api.solosimcard.com/{{passImage}}" alt="Pass Image" style="max-width: 300px;">
   <hr style="border-top: 1px dashed #ccc;">
   <h2 style="text-align: right; color: #000;">💰 Umumiy narx: <span style="color: #007BFF;">{{grand_total}}</span></h2>
   <p style="text-align: center; font-size: 12px; color: #888; margin-top: 30px;">Rahmat! Sizning buyurtmangiz tez orada yetkaziladi.</p>

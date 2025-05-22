@@ -1,9 +1,13 @@
 import os
 
 from dotenv import load_dotenv
+from pathlib import Path
 
 # .env faylni to‘g‘ri yo‘l bilan yuklash
 load_dotenv(dotenv_path=os.path.join(os.path.dirname(os.path.dirname(__file__)), ".env"))
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+print(BASE_DIR)
 
 load_dotenv()
 

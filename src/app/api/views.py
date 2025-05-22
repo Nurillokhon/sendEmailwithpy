@@ -57,7 +57,6 @@ async def send_invoice(data: dict = Depends(get_order_data)):
             email=data["email"],
             product_name=data["product_name"],
             product_price=data["product_price"],
-            product_describ=data["product_describ"],
             product_image=product_image_url,
             passImage=pass_image_url,
             grand_total=data["grand_total"],

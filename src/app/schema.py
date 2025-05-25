@@ -14,6 +14,7 @@ class OrderData(BaseModel):
     city: str
     country: str
     phone: str
+    product_describ: Optional[str] = None
     product_name: str
     product_price: str
     product_image: str = None
@@ -28,6 +29,7 @@ async def get_order_data(
         city: str = Form(...),
         country: str = Form(...),
         phone: str = Form(...),
+        product_describ: Optional[str] = Form(None),
         email: str = Form(...),
         product_name: str = Form(...),
         product_price: str = Form(...),
@@ -43,6 +45,7 @@ async def get_order_data(
         "city": city,
         "country": country,
         "phone": phone,
+        "product_describ": product_describ,
         "email": email,
         "product_name": product_name,
         "product_price": product_price,

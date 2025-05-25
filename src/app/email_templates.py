@@ -1,7 +1,7 @@
 # Email uchun HTML templatelar
 
 admin_template = """
-<div style="max-width: 600px; margin: auto; font-family: 'Courier New', Courier, monospace; background-color: #fff; border: 1px solid #ccc; padding: 20px;">
+<div style="max-width: 600px; margin: auto; background-color: #fff; border: 1px solid #ccc; padding: 20px;">
   <h2 style="text-align: center; border-bottom: 1px dashed #ccc; padding-bottom: 10px;">🧾 Chek / Invoice (Admin uchun)</h2>
   <p><b>Buyurtma raqami:</b> {{order_number}}</p>
   <hr style="border-top: 1px dashed #ccc;">
@@ -28,7 +28,7 @@ admin_template = """
 """
 
 user_template = """
-<div style="max-width: 600px; margin: auto; font-family: 'Courier New', Courier, monospace; background-color: #fff; border: 1px solid #ccc; padding: 20px;">
+<div style="max-width: 600px; margin: auto; background-color: #fff; border: 1px solid #ccc; padding: 20px;">
   <h2 style="text-align: center; border-bottom: 1px dashed #ccc; padding-bottom: 10px;">🧾 Chek / Invoice (User uchun)</h2>
   <p><b>Buyurtma raqami:</b> {{order_number}}</p>
   <hr style="border-top: 1px dashed #ccc;">
